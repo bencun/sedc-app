@@ -1,11 +1,11 @@
 <template>
+  <!--
+    v-bind je :
+    v-on je @
+  -->
   <div id="app">
-    Hello, world!
-    <custom-button/>
-    <custom-button/>
-    <custom-button/>
-    <custom-button/>
-    <custom-button/>
+    <custom-button :my-count="count"
+    @klik-na-dugme="incrementCount"/>
   </div>
 </template>
 
@@ -15,9 +15,16 @@ import CustomButton from './components/CustomButton.vue';
 export default {
   name: 'App',
   // register the components
-  components: { CustomButton }
+  components: { CustomButton },
+  data() {
+    return {
+      count: 0,
+    };
+  },
+  methods: {
+    incrementCount(eventData) {
+      this.count = this.count + eventData.amount;
+    }
+  }
 }
 </script>
-
-<style lang="scss">
-</style>
