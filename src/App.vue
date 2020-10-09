@@ -2,7 +2,7 @@
   <div id="app">
     <h1 class="title">To-Do App</h1>
     <task-form @add-todo="addTodoHandler" :search="searchParams"/>
-    <task-list :todos="filteredTodos"/>
+    <task-list :todos="filteredTodos" @delete="deleteTaskHandler"/>
   </div>
 </template>
 
@@ -39,6 +39,12 @@ export default {
         id: generateId(), text: info.text, done: false,
       };
       this.todoData.push(newTodo);
+    },
+    deleteTaskHandler(taskId) {
+      const taskIdx = this.todoData.findIndex(t => t.id === taskId);
+      if (taskIdx >= 0) {
+        this.todoData.splice(taskIdx, 1);
+      }
     }
   },
   computed: {
