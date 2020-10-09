@@ -1,12 +1,33 @@
 <template>
   <div class="task-form pl">
-    <input
-      class="todo-text ps"
-      type="text"
-      v-model="todoText"
-      @keyup.enter="addHandler"/>
 
-    <my-button @click="addHandler">Add</my-button>
+    <div class="form-add">
+      <input
+        class="todo-text ps"
+        type="text"
+        placeholder="Add a new todo"
+        v-model="todoText"
+        @keyup.enter="addHandler"/>
+
+      <my-button @click="addHandler">Add</my-button>
+      <my-button @click="showSearch = !showSearch">
+        <span v-show="!showSearch">></span>
+        <span v-show="showSearch">v</span>
+      </my-button>
+    </div>
+
+    <div class="form-search" v-if="showSearch">
+      <input
+        type="text"
+        placeholder="Search..."
+        class="todo-text search-text ps"/>
+
+      <label class="filter"> 
+        <input type="checkbox">
+        Hide
+      </label>
+    </div>
+
   </div>
 </template>
 
@@ -19,6 +40,7 @@ export default {
   data() {
     return {
       todoText: '',
+      showSearch: true,
     };
   },
   methods: {
@@ -36,11 +58,24 @@ export default {
 .task-form {
   width: $default-width;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+
+
   .todo-text {
     color: $text-color;
     border-color: $border-color;
     flex-grow: 1;
+  }
+
+  .form-add,
+  .form-search {
+    width: 100%;
+    display: flex;
+  }
+
+  .form-add {
+    margin-bottom: $padding-l;
   }
 }
 </style>
