@@ -3,13 +3,25 @@
     <input class="checkbox" type="checkbox" v-model="task.done"/>
 
     <span
+      v-if="!editMode"
       class="text"
       :class="spanClass">
       {{ task.text }}
     </span>
 
+    <input
+      class="text"
+      v-if="editMode"
+      type="text"
+      v-model="task.text"
+      @keyup.enter="editMode = false"
+      @click.stop/>
+
     <my-button
-      class="delete"
+      :stop="true"
+      @click="editMode = true">Edit</my-button>
+
+    <my-button
       @click="handleDelete"
       :stop="true">X</my-button>
   </div>
@@ -25,6 +37,11 @@ export default {
     task: {
       type: Object,
     }
+  },
+  data() {
+    return {
+      editMode: false,
+    };
   },
   methods: {
     toggleDone() {
