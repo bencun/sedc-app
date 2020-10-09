@@ -1,9 +1,11 @@
 <template>
+  <!-- TODO: Add search -->
   <div class="task-list">
     <single-task
       v-for="todo in todos"
       :key="todo.id"
       :task="todo"
+      @delete="deleteTask"
       />
   </div>
 </template>
@@ -17,6 +19,14 @@ export default {
   props: {
     todos: {
       type: Array,
+    }
+  },
+  methods: {
+    deleteTask(taskId) {
+      const taskIdx = this.todos.findIndex(t => t.id === taskId);
+      if (taskIdx >= 0) {
+        this.todos.splice(taskIdx, 1);
+      }
     }
   }
 }
