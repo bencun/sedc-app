@@ -20,10 +20,11 @@
       <input
         type="text"
         placeholder="Search..."
-        class="todo-text search-text ps"/>
+        class="todo-text search-text ps"
+        v-model="search.searchText"/>
 
       <label class="filter"> 
-        <input type="checkbox">
+        <input type="checkbox" v-model="search.hideCompleted">
         Hide
       </label>
     </div>
@@ -37,10 +38,16 @@ import MyButton from "./MyButton.vue";
 export default {
   name: 'TaskForm',
   components: { MyButton },
+  props: {
+    search: {
+      type: Object,
+      required: true,
+    }
+  },
   data() {
     return {
       todoText: '',
-      showSearch: true,
+      showSearch: false,
     };
   },
   methods: {
@@ -76,6 +83,10 @@ export default {
 
   .form-add {
     margin-bottom: $padding-l;
+  }
+
+  .form-search {
+    align-items: center;
   }
 }
 </style>

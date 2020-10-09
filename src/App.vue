@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <h1 class="title">To-Do App</h1>
-    <task-form @add-todo="addTodoHandler"/>
-    <task-list :todos="todoData"/>
+    <task-form @add-todo="addTodoHandler" :search="searchParams"/>
+    <task-list :todos="filteredTodos"/>
   </div>
 </template>
 
@@ -21,6 +21,10 @@ export default {
   components: { TaskList, TaskForm },
   data() {
     return {
+      searchParams: {
+        searchText: '',
+        hideCompleted: false,
+      },
       todoData: [
         {id: generateId(), text: 'Buy milk', done: false},
         {id: generateId(), text: 'Buy milk', done: false},
@@ -35,6 +39,29 @@ export default {
         id: generateId(), text: info.text, done: false,
       };
       this.todoData.push(newTodo);
+    }
+  },
+  computed: {
+    filteredTodos() {
+      // first search by text
+      const searchedTodos = this.todoData
+        .filter(todo => {
+          const todoTextLowercase = todo.text.toLowerCase();
+          const searchTextLowercase = this.searchParams.searchText.toLowerCase();
+          const hasSearchText = todoTextLowercase.indexOf(searchTextLowercase) >= 0;
+
+          return hasSearchText;
+        });
+
+      // then remove any completed todos if checkbox is active
+      if (this.searchParams.hideCompleted) {
+        const notCompleted = searchedTodos.filter(todo => !todo.done);
+        return notCompleted;
+      }
+      // else return filtered by search only
+      else {
+       return searchedTodos;
+      }
     }
   }
 }
