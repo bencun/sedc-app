@@ -18,7 +18,7 @@ export default {
         dynamicURL += `done=${!context.state.searchParams.hideCompleted}`;
       }
       if (context.state.searchParams.searchText.trim().length > 0) {
-        dynamicURL += `q=${context.state.searchParams.searchText.trim()}`;
+        dynamicURL += `&q=${context.state.searchParams.searchText.trim()}`;
       }
       const response = await fetch(dynamicURL);
       if (response.ok) {
