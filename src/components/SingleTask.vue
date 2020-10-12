@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import MyButton from './MyButton.vue';
 
 export default {
@@ -50,11 +51,12 @@ export default {
     };
   },
   methods: {
+    ...mapActions('todos', ['deleteTask']),
     toggleDone() {
       this.task.done = !this.task.done;
     },
     handleDelete() {
-      this.$emit('delete', this.task.id);
+      this.deleteTask(this.task.id)
     },
     startEdit() {
       this.editMode = true;

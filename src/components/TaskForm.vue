@@ -21,38 +21,44 @@
         type="text"
         placeholder="Search..."
         class="todo-text search-text ps"
-        v-model="search.searchText"/>
+        v-model="searchText"/>
 
       <label class="filter"> 
-        <input type="checkbox" v-model="search.hideCompleted">
+        <input type="checkbox" v-model="hideCompleted">
         Hide
       </label>
+
+      <my-button @click="startSearch">Search</my-button>
     </div>
 
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import MyButton from "./MyButton.vue";
 
 export default {
   name: 'TaskForm',
   components: { MyButton },
-  props: {
-    search: {
-      type: Object,
-      required: true,
-    }
-  },
   data() {
     return {
       todoText: '',
       showSearch: false,
+      searchText: '',
+      hideCompleted: false,
     };
   },
   methods: {
+    ...mapActions('todos', ['addTask', 'setSearchParams']),
+    startSearch() {
+      this.setSearchParams({
+        searchText: this.searchText,
+        hideCompleted: this.hideCompleted,
+      });
+    },
     addHandler() {
-      this.$emit('add-todo', {text: this.todoText});
+      this.addTask(this.todoText);
       this.todoText = '';
     }
   }
