@@ -1,20 +1,14 @@
 <template>
   <div id="app">
     <h1 class="title">To-Do App</h1>
-    <task-form @add-todo="addTodoHandler" :search="searchParams"/>
-    <task-list :todos="filteredTodos" @delete="deleteTaskHandler"/>
+    <task-form :search="searchParams"/>
+    <task-list/>
   </div>
 </template>
 
 <script>
 import TaskList from './components/TaskList.vue';
 import TaskForm from './components/TaskForm.vue';
-
-let idCounter = 0;
-const generateId = function() {
-  idCounter += 1;
-  return idCounter;
-}
 
 export default {
   name: 'App',
@@ -25,30 +19,24 @@ export default {
         searchText: '',
         hideCompleted: false,
       },
-      todoData: [
-        {id: generateId(), text: 'Buy milk', done: false},
-        {id: generateId(), text: 'Buy milk', done: false},
-        {id: generateId(), text: 'Walk the dog', done: true},
-        {id: generateId(), text: 'Wash the dishes', done: false},
-      ],
     };
   },
   methods: {
-    addTodoHandler(info) {
+    /* addTodoHandler(info) {
       const newTodo = {
         id: generateId(), text: info.text, done: false,
       };
       this.todoData.push(newTodo);
-    },
-    deleteTaskHandler(taskId) {
+    }, */
+    /* deleteTaskHandler(taskId) {
       const taskIdx = this.todoData.findIndex(t => t.id === taskId);
       if (taskIdx >= 0) {
         this.todoData.splice(taskIdx, 1);
       }
-    }
+    } */
   },
   computed: {
-    filteredTodos() {
+    /* filteredTodos() {
       // first search by text
       const searchedTodos = this.todoData
         .filter(todo => {
@@ -68,7 +56,7 @@ export default {
       else {
        return searchedTodos;
       }
-    }
+    } */
   }
 }
 </script>
