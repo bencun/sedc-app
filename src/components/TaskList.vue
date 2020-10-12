@@ -20,11 +20,6 @@ export default {
   computed: {
     ...mapGetters('todos', ['filteredTodos']),
   },
-  methods: {
-    deleteTask(taskId) {
-      this.$emit('delete', taskId);
-    }
-  }
 }
 </script>
 
