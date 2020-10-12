@@ -21,14 +21,13 @@
         type="text"
         placeholder="Search..."
         class="todo-text search-text ps"
-        v-model="searchText"/>
+        v-model="searchText"
+        @keyup="changeInputHandler"/>
 
       <label class="filter"> 
-        <input type="checkbox" v-model="hideCompleted">
+        <input type="checkbox" v-model="hideCompleted" @change="changeInputHandler">
         Hide
       </label>
-
-      <my-button @click="startSearch">Search</my-button>
     </div>
 
   </div>
@@ -51,7 +50,7 @@ export default {
   },
   methods: {
     ...mapActions('todos', ['addTask', 'setSearchParams']),
-    startSearch() {
+    changeInputHandler() {
       this.setSearchParams({
         searchText: this.searchText,
         hideCompleted: this.hideCompleted,

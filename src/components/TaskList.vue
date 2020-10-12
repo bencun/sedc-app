@@ -5,7 +5,6 @@
       v-for="todo in filteredTodos"
       :key="todo.id"
       :task="todo"
-      @delete="deleteTask"
       />
   </div>
 </template>
