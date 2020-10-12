@@ -9,10 +9,17 @@
 <script>
 import TaskList from './components/TaskList.vue';
 import TaskForm from './components/TaskForm.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   components: { TaskList, TaskForm },
+  created(){
+    this.getTasksAPI();
+  },
+  methods: {
+    ...mapActions('todos', ['getTasksAPI']),
+  }
 }
 </script>
 

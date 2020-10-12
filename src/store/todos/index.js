@@ -1,9 +1,4 @@
-
-let idCounter = 0;
-const generateId = function() {
-  idCounter += 1;
-  return idCounter;
-}
+const APIURL = 'http://localhost:3000';
 
 export default {
   namespaced: true,
@@ -12,26 +7,38 @@ export default {
       searchText: '',
       hideCompleted: false,
     },
-    todoData: [
-      {id: generateId(), text: 'Buy milk', done: false},
-      {id: generateId(), text: 'Buy milk', done: false},
-      {id: generateId(), text: 'Walk the dog', done: true},
-      {id: generateId(), text: 'Wash the dishes', done: false},
-    ],
+    todoData: [],
   },
   // dispatchuju se
   actions: {
-    deleteTask(context, taskId) {
-      const taskIdx = context.state.todoData.findIndex(t => t.id === taskId);
-      if (taskIdx >= 0) {
-        context.commit('spliceTask', taskIdx);
+    async getTasksAPI(context) {
+      const response = await fetch(`${APIURL}/tasks`);
+      if (response.ok) {
+        const parsedJSON = await response.json();
+        context.commit('setAllTasks', parsedJSON);
       }
     },
-    addTask(context, text) {
-      const newTodo = {
-        id: generateId(), text, done: false,
-      };
-      context.commit('pushTask', newTodo);
+    async deleteTask(context, taskId) {
+      const response = await fetch(`${APIURL}/tasks/${taskId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        context.dispatch('getTasksAPI');
+      }
+    },
+    async addTask(context, text) {
+      const newTodo = { text, done: false };
+      const response = await fetch(`${APIURL}/tasks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTodo)
+      });
+      if (response.ok) {
+        context.dispatch('getTasksAPI');
+      }
+
     },
     setSearchParams(context, params) {
       context.commit('setParams', params);
@@ -47,6 +54,9 @@ export default {
     },
     setParams(state, params) {
       state.searchParams = params;
+    },
+    setAllTasks(state, tasks) {
+      state.todoData = tasks;
     }
   },
   getters: {
@@ -68,7 +78,7 @@ export default {
       }
       // else return filtered by search only
       else {
-       return searchedTodos;
+        return searchedTodos;
       }
     }
   },
