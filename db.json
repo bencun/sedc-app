@@ -1,19 +1,24 @@
 {
   "tasks": [
     {
-      "id": 2,
-      "text": "Buy milk",
-      "done": false
-    },
-    {
-      "id": 3,
-      "text": "Walk the dog",
+      "id": 4,
+      "text": "test222",
       "done": true
     },
     {
-      "text": "Test todo",
+      "id": 5,
+      "text": "test",
+      "done": true
+    },
+    {
+      "text": "Dodajem todo",
       "done": false,
-      "id": 5
+      "id": 6
+    },
+    {
+      "text": "Novi todo",
+      "done": false,
+      "id": 7
     }
   ]
 }

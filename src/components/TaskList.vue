@@ -2,7 +2,7 @@
   <!-- TODO: Add search -->
   <div class="task-list">
     <single-task
-      v-for="todo in filteredTodos"
+      v-for="todo in todoData"
       :key="todo.id"
       :task="todo"
       />
@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import SingleTask from './SingleTask.vue';
 
 export default {
   name: 'TaskList',
   components: {SingleTask},
   computed: {
-    ...mapGetters('todos', ['filteredTodos']),
+    ...mapState('todos', ['todoData']),
   },
 }
 </script>

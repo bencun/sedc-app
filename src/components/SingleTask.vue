@@ -51,9 +51,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions('todos', ['deleteTask']),
+    ...mapActions('todos', ['deleteTask', 'editTask']),
     toggleDone() {
       this.task.done = !this.task.done;
+      this.editTask({
+        id: this.task.id,
+        text: this.task.text,
+        done: this.task.done,
+      });
     },
     handleDelete() {
       this.deleteTask(this.task.id)
@@ -67,8 +72,12 @@ export default {
       this.editedText = '';
     },
     saveEdit() {
+      this.editTask({
+        id: this.task.id,
+        text: this.editedText,
+        done: this.task.done,
+      });
       this.editMode = false;
-      this.task.text = this.editedText;
       this.editedText = '';
     },
   },

@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <h1 class="title">To-Do App</h1>
-    <task-form/>
-    <task-list/>
+    <div>
+      <h1 class="title">To-Do App</h1>
+      <task-form/>
+      <task-list/>
+    </div>
   </div>
 </template>
 

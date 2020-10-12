@@ -7,12 +7,20 @@ export default {
       searchText: '',
       hideCompleted: false,
     },
-    todoData: [],
+    todoData: null,
   },
   // dispatchuju se
   actions: {
     async getTasksAPI(context) {
-      const response = await fetch(`${APIURL}/tasks`);
+      context.commit('setAllTasks', null);
+      let dynamicURL = `${APIURL}/tasks?`;
+      if (context.state.searchParams.hideCompleted) {
+        dynamicURL += `done=${!context.state.searchParams.hideCompleted}`;
+      }
+      if (context.state.searchParams.searchText.trim().length > 0) {
+        dynamicURL += `q=${context.state.searchParams.searchText.trim()}`;
+      }
+      const response = await fetch(dynamicURL);
       if (response.ok) {
         const parsedJSON = await response.json();
         context.commit('setAllTasks', parsedJSON);
@@ -40,8 +48,21 @@ export default {
       }
 
     },
+    async editTask(context, task) {
+      const response = await fetch(`${APIURL}/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(task),
+      });
+      if(response.ok) {
+        context.dispatch('getTasksAPI');
+      }
+    },
     setSearchParams(context, params) {
       context.commit('setParams', params);
+      context.dispatch('getTasksAPI');
     }
   },
   // commituju se
@@ -57,29 +78,6 @@ export default {
     },
     setAllTasks(state, tasks) {
       state.todoData = tasks;
-    }
-  },
-  getters: {
-    filteredTodos(state) {
-      // first search by text
-      const searchedTodos = state.todoData
-        .filter(todo => {
-          const todoTextLowercase = todo.text.toLowerCase();
-          const searchTextLowercase = state.searchParams.searchText.toLowerCase();
-          const hasSearchText = todoTextLowercase.indexOf(searchTextLowercase) >= 0;
-
-          return hasSearchText;
-        });
-
-      // then remove any completed todos if checkbox is active
-      if (state.searchParams.hideCompleted) {
-        const notCompleted = searchedTodos.filter(todo => !todo.done);
-        return notCompleted;
-      }
-      // else return filtered by search only
-      else {
-        return searchedTodos;
-      }
     }
   },
 };
