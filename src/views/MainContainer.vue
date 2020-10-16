@@ -1,0 +1,15 @@
+<template>
+  <div>
+      Hello!
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'MainContainer'
+}
+</script>
+
+<style>
+
+</style>

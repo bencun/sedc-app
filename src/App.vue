@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <router-view></router-view>
     <div>
       <h1 class="title">To-Do App</h1>
       <task-form/>
