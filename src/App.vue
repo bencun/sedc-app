@@ -1,28 +1,12 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <div>
-      <h1 class="title">To-Do App</h1>
-      <task-form/>
-      <task-list/>
-    </div>
   </div>
 </template>
 
 <script>
-import TaskList from './components/TaskList.vue';
-import TaskForm from './components/TaskForm.vue';
-import { mapActions } from 'vuex';
-
 export default {
   name: 'App',
-  components: { TaskList, TaskForm },
-  created(){
-    this.getTasksAPI();
-  },
-  methods: {
-    ...mapActions('todos', ['getTasksAPI']),
-  }
 }
 </script>
 
@@ -36,10 +20,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .title {
-    text-align: center;
-  }
 }
 </style>
 

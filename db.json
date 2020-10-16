@@ -8,17 +8,32 @@
     {
       "id": 5,
       "text": "test",
+      "done": false
+    },
+    {
+      "id": 8,
+      "text": "Novitodo",
       "done": true
     },
     {
-      "text": "Dodajem todo",
+      "text": "Testiram todo",
       "done": false,
-      "id": 6
+      "id": 9
     },
     {
-      "text": "Novi todo",
+      "text": "Novi todo test",
       "done": false,
-      "id": 7
+      "id": 10
+    },
+    {
+      "text": "Novi todo dodajem",
+      "done": false,
+      "id": 11
+    },
+    {
+      "text": "neki novo todo",
+      "done": false,
+      "id": 12
     }
   ]
 }

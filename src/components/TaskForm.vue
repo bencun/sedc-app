@@ -29,7 +29,6 @@
         Hide
       </label>
     </div>
-
   </div>
 </template>
 
@@ -59,6 +58,10 @@ export default {
     addHandler() {
       this.addTask(this.todoText);
       this.todoText = '';
+      this.goToList();
+    },
+    goToList() {
+      this.$router.push({name: 'TaskList'});
     }
   }
 }
